@@ -46,7 +46,7 @@ docker-compose up --build -d
 docker-compose exec app npx prisma migrate deploy
 ```
 
-# [opend](http://localhost:3000)
+# [http://localhost:3000](http://localhost:3000)
 
 # OR you can run the app without Docker 
 
