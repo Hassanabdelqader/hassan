@@ -1,0 +1,29 @@
+version: '3.8'
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    environment:
+      - DATABASE_URL=postgresql://postgres:123@db:5432/blogtask?schema=public
+      - KEY=hasan
+      - NEXT_PUBLIC_BASE_URL=http://localhost:3000
+      - NEXTAUTH_URL=http://localhost:3000
+    depends_on:
+      - db
+    restart: always
+
+  db:
+    image: postgres:13
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 123
+      POSTGRES_DB: blogtask
+    ports:
+      - "5432:5432"
+
+
+

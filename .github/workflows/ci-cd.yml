@@ -1,0 +1,49 @@
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    services:
+      postgres:
+        image: postgres:14
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: 123
+          POSTGRES_DB: blogtask
+        ports:
+          - 5432:5432
+        options: --health-cmd "pg_isready" --health-interval 10s
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Set up Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: '20.16.0' 
+
+    - name: Install dependencies
+      run: npm install
+
+    - name: Run migrations
+      run: npx prisma migrate deploy
+      env:
+        DATABASE_URL: postgres://postgres:123@localhost:5432/blogtask
+
+    - name: Run tests
+      env:
+        DATABASE_URL: postgres://postgres:123@localhost:5432/blogtask
+      run: npm test
+
+    - name: Build
+      run: npm run build
