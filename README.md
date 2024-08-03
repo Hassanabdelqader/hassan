@@ -8,7 +8,7 @@ Start Date : 01/08 08:00 pm
 
 Finish time: 03/08 06:02 Am
 
-Actual time needed to complete: 5 minutes
+Actual time needed to complete: 2 days
 
 ***********************************************
 
@@ -45,6 +45,8 @@ docker-compose up --build -d
 ```
 docker-compose exec app npx prisma migrate deploy
 ```
+
+# [opend](http://localhost:3000)
 
 # OR you can run the app without Docker 
 
